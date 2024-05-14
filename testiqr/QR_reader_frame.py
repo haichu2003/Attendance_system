@@ -11,14 +11,19 @@ class QRReaderFrame(tk.Frame):
         label['text'] = "QR Reader Frame"
         label.grid(row=0, column=2, padx=10, pady=10)
 
-        open_start_frame = ttk.Button(self)
-        open_start_frame['text'] = "Previous Frame"
-        open_start_frame['command'] = lambda : [self.set_is_visible(False), controller.show_frame(0)]
-        open_start_frame.grid(row=4, column=4, padx=10, pady=10)
+        open_previous_frame = ttk.Button(self)
+        open_previous_frame['text'] = "Previous Frame"
+        open_previous_frame['command'] = lambda : [self.set_is_visible(False), controller.show_frame(0)]
+        open_previous_frame.grid(row=4, column=3, padx=10, pady=10)
+
+        open_next_frame = ttk.Button(self)
+        open_next_frame['text'] = "Next Frame"
+        open_next_frame['command'] = lambda : [self.set_is_visible(False), controller.show_frame(2)]
+        open_next_frame.grid(row=4, column=4, padx=10, pady=10)
 
         # initiate Label component to contain camera frame
         self.image_label = ttk.Label(self)
-        self.image_label.grid(row=2, rowspan=2, column=1, columnspan=3, padx=10, pady=10)
+        self.image_label.grid(row=2, rowspan=2, column=2, columnspan=4, padx=10, pady=10)
 
         # camera frame dimensions
         self.width = 600

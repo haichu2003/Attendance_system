@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from QR_reader_frame import QRReaderFrame
 from start_frame import StartFrame
+from input_frame import InputFrame
+from success_frame import SuccessFrame
 
 class AttendanceApp(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -25,7 +27,7 @@ class AttendanceApp(tk.Tk):
         self.geometry(f'{self.width}x{self.height}+{center_x}+{center_y}')
 
         self.frames = {}
-        frames = [StartFrame, QRReaderFrame]
+        frames = [StartFrame, QRReaderFrame, InputFrame, SuccessFrame]
         for i in range(len(frames)):
             F = frames[i]
             frame = F(container, self)
