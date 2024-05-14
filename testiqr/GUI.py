@@ -27,7 +27,12 @@ class AttendanceApp(tk.Tk):
         self.geometry(f'{self.width}x{self.height}+{center_x}+{center_y}')
 
         self.frames = {}
-        frames = [StartFrame, QRReaderFrame, InputFrame, SuccessFrame]
+        frames = [
+            StartFrame, 
+            QRReaderFrame, 
+            InputFrame, 
+            SuccessFrame
+            ]
         for i in range(len(frames)):
             F = frames[i]
             frame = F(container, self)
