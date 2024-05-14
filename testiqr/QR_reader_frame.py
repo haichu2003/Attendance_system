@@ -4,50 +4,51 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 
 class QRReaderFrame(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, is_visible=False):
         tk.Frame.__init__(self, parent)
+        self.is_visible  = is_visible # check if the frame is visible (i.e. on top of other frames)
         label = ttk.Label(self)
         label['text'] = "QR Reader Frame"
-        label.grid(row=0, column=4, padx=10, pady=10)
-        # label.pack()
-
-        self.width = 600
-        self.height = 400
-        cap = cv2.VideoCapture(0)
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
-
-        self.image_label = ttk.Label(self)
-        self.image_label.grid(row=1, column=4, padx=10, pady=10)
+        label.grid(row=0, column=2, padx=10, pady=10)
 
         open_start_frame = ttk.Button(self)
         open_start_frame['text'] = "Previous Frame"
-        open_start_frame['command'] = lambda : controller.show_frame(0)
-        open_start_frame.grid(row=2, column=1, padx=10, pady=10)
+        open_start_frame['command'] = lambda : [self.set_is_visible(False), controller.show_frame(0)]
+        open_start_frame.grid(row=4, column=4, padx=10, pady=10)
 
-        open_camera = ttk.Button(self)
-        open_camera['text'] = "Open Camera"
-        open_camera['command'] = lambda : self.open_camera(cap)
-        open_camera.grid(row=2, column=2, padx=10, pady=10)
+        # initiate Label component to contain camera frame
+        self.image_label = ttk.Label(self)
+        self.image_label.grid(row=2, rowspan=2, column=1, columnspan=3, padx=10, pady=10)
+
+        # camera frame dimensions
+        self.width = 600
+        self.height = 400
+
+        # opencv capture with camera
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
+        self.open_camera()
+
     
+    def set_is_visible(self, is_visible):
+        self.is_visible = is_visible
     
-    def open_camera(self, cap):
-        _, frame = cap.read()
-        opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
-    
-        # Capture the latest frame and transform to image 
-        captured_image = Image.fromarray(opencv_image) 
-    
-        # Convert captured image to photoimage 
-        photo_image = ImageTk.PhotoImage(image=captured_image) 
-    
-        # Displaying photoimage in the label 
-        self.image_label.photo_image = photo_image 
-    
-        # Configure image in the self.image_label 
-        self.image_label.configure(image=photo_image) 
-    
-        # Repeat the same process after every 10 seconds 
-        self.image_label.after(10, lambda : self.open_camera(cap)) 
+
+    def open_camera(self):
+        ret, frame = self.cap.read()
+        if not ret: return
+        if not self.is_visible:
+            # not showing the image read from camera
+            # to improve performance
+            self.image_label.after(10, lambda : self.open_camera())
+            self.image_label.configure(image='')
+        else:
+            opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
+            captured_image = Image.fromarray(opencv_image)
+            photo_image = ImageTk.PhotoImage(image=captured_image) 
+            self.image_label.photo_image = photo_image
+            self.image_label.configure(image=photo_image)
+            self.image_label.after(10, lambda : self.open_camera())
 
 

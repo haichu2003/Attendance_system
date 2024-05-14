@@ -37,11 +37,8 @@ class AttendanceApp(tk.Tk):
     
     def show_frame(self, cont):
         frame = self.frames[cont]
+        frame.set_is_visible(True)
         frame.tkraise()
-
-def button_clicked(args):
-    print(args)
-    print("Button clicked")
 
 if __name__ == "__main__":
     app = AttendanceApp()

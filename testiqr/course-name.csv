@@ -1,8 +1,6 @@
-ID,Name
-2,rr,14.10
-4,rrr,14.10
-3,ee,14.12
-5,gtb,14.17
-7,fjfj,15.48
-fjfj,,16.10
-,,16.12
+,id,name
+0,0,MATH.MA.200
+1,1,MATH.MA.210
+2,2,DATA.ML.200
+3,3,DATA.ML.300
+4,4,MATH.APP.200
