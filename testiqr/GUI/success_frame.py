@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import time
-import threading
 
 class SuccessFrame(tk.Frame):
     def __init__(self, parent, controller, is_visible=False):
