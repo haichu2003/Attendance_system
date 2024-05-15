@@ -3,7 +3,7 @@
 
 In the terminal, run
 ```
-pip install json pillow qreader opencv-python
+pip install pillow qreader opencv-python
 ```
 
 Try to run the application
