@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from QR_reader_frame import QRReaderFrame
 
+from QR_reader_frame import QRReaderFrame
 from start_frame import StartFrame
 from input_frame import InputFrame
 from success_frame import SuccessFrame
@@ -11,12 +11,16 @@ class AttendanceApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
 
         self.title("Attendance Tracker")
-        self.bind('<Escape>', lambda e: container.quit())
         
         container = tk.Frame(self)
         container.pack(side='top', fill='both', expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
+
+        # use esc to quit the application
+        # not recommended for other users
+        # for debugging purpose
+        self.bind('<Escape>', lambda e: container.quit())
 
         # center the window with respect to user's screen
         self.width = 800
