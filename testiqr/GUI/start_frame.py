@@ -20,3 +20,6 @@ class StartFrame(tk.Frame):
     
     def set_is_visible(self, is_visible):
         self.is_visible = is_visible
+
+    def set_props(self, props):
+        self.props = props

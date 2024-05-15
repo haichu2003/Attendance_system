@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from QR_reader_frame import QRReaderFrame
+
 from start_frame import StartFrame
 from input_frame import InputFrame
 from success_frame import SuccessFrame
@@ -42,9 +43,12 @@ class AttendanceApp(tk.Tk):
         self.show_frame(0)
     
     
-    def show_frame(self, cont):
+    def show_frame(self, cont, props=None):
         frame = self.frames[cont]
         frame.set_is_visible(True)
+        if props: 
+            frame.set_props(props)
+            print(props)
         frame.tkraise()
 
 if __name__ == "__main__":

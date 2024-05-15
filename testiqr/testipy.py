@@ -1,7 +1,9 @@
 import cv2
-from pyzbar.pyzbar import decode
+# from pyzbar.pyzbar import decode
 import time
 import json
+from qrdet import QRDetector
+from qreader import QReader
 
 
 def get_id(qrcode):
@@ -16,22 +18,37 @@ def get_id(qrcode):
 
 
 cam = cv2.VideoCapture(0)
+detector = QRDetector(model_size='s')
+qreader = QReader(model_size='s')
+cv_decoder = cv2.QRCodeDetector()
 
 camera = True
 while camera == True:
-    suceess, frame = cam.read()
+    success, frame = cam.read()
 
-    for i in decode(frame):
-        qrcode = i.data.decode("utf-8")
+    if success:
+        outputs = qreader.detect_and_decode(frame)
+        print(outputs)
+        # detections = detector.detect(image=frame, is_bgr=True)
+        # print(detections)
+        # # print(data)
+        # for detection in detections:
+        #     x1, y1, x2, y2 = detection['bbox_xyxy']
+        #     im = frame[x1:x2, y1:y2]
+        #     data, bbox = cv_decoder.decode(im)
 
-        try:
-            w = get_id(qrcode)
-            print(w)
-            time.sleep(1)
-        except:
-            print("not correct qrcode")
+        # # for i in decode(frame):
+        # #     qrcode = i.data.decode("utf-8")
+        for data in outputs:
+            try:
+                w = get_id(data)
+                print(w)
+                time.sleep(1)
+            except:
+                print("not correct qrcode")
 
     cv2.imshow("scan qrcode", frame)
-    cv2.waitKey(1)
+    if cv2.waitKey(1) == ord("q"): 
+        break
 
 

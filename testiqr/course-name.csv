@@ -1,6 +1,6 @@
-,id,name
-0,0,MATH.MA.200
-1,1,MATH.MA.210
-2,2,DATA.ML.200
-3,3,DATA.ML.300
-4,4,MATH.APP.200
+id,name
+MATH.MA.200,Multivariable Calculus
+MATH.MA.210,Probability and Statistical Inference
+DATA.ML.200,Pattern Recogniniton and Machine Learning
+DATA.ML.300,Recommender System
+MATH.APP.200, I don't remember the name of the course
