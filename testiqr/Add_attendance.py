@@ -2,7 +2,8 @@ import pandas as pd
 from datetime import datetime
 
 class AddAttendance:
-    def __init__(self, id):
+    def __init__(self, id, course_path):
+        self._course_path = course_path
         self._id = id
         self._name = None
         self._today_date = datetime.now().strftime("%d.%m.%Y")
@@ -10,6 +11,7 @@ class AddAttendance:
         self._load_student_data()
         self.add_to_excel()
 
+        
 
     def _load_student_data(self):
         #need to add path to csv
@@ -29,7 +31,7 @@ class AddAttendance:
     def add_to_excel(self):
         try: 
             # Need to add path to excel    
-            attendance_df = pd.read_excel('attendance.xlsx')
+            attendance_df = pd.read_excel(self._course_path)
             if self._today_date not in attendance_df.columns:
                 attendance_df[self._today_date] = pd.NaT
 
@@ -51,5 +53,5 @@ class AddAttendance:
         except pd.errors.ParserError:
             print("Error parsing course file.")
 
-student = AddAttendance(2)
+student = AddAttendance(2, 'C:/Users/Joni/Documents/kesaharkka/Attendance_system/testiqr/attendance.xlsx')
 print("Name:", student.get_name())
