@@ -5,7 +5,7 @@ class AddAttendance:
     def __init__(self, id):
         self._id = id
         self._name = None
-        self._today_date = datetime.now().strftime("%d.%m")
+        self._today_date = datetime.now().strftime("%d.%m.%Y")
         self._today_time = datetime.now().strftime("%H.%M")
         self._load_student_data()
         self.add_to_excel()
@@ -24,22 +24,32 @@ class AddAttendance:
     def get_name(self):
         return self._name
 
-    def get_timestamp(self):
-        return self._datetime
-    
-    def set_timestamp(self):
-        self._datetime = datetime.now()
     
 
     def add_to_excel(self):
-        #need to add path to excel    
-        attendance_df = pd.read_excel('attendance.xlsx')
-        if self._today_date not in attendance_df.columns:
-            attendance_df[self._today_date] = pd.NaT
-        attendance_df.loc[attendance_df['ID'] == self._id, self._today_date] = pd.to_datetime(attendance_df.loc[attendance_df['ID'] == self._id, self._today_date].dt.date.astype(str) + ' ' + self._today_time)
-        new_record = pd.DataFrame({'ID': [self._id], 'Name': [self._name], self._today_date: [self._today_time]})
-        attendance_df = pd.concat([attendance_df, new_record], ignore_index=True)
-        attendance_df.to_excel('attendance.xlsx', index=False)
+        try: 
+            # Need to add path to excel    
+            attendance_df = pd.read_excel('attendance.xlsx')
+            if self._today_date not in attendance_df.columns:
+                attendance_df[self._today_date] = pd.NaT
 
-student = AddAttendance(1)
+            
+            # Check if the student ID already exists in the attendance data
+            if self._id in attendance_df['ID'].values:
+                # Update the attendance time for the specified student
+                attendance_df.loc[attendance_df['ID'] == self._id, self._today_date] = str(self._today_time)
+            else:
+                # add a new record
+                new_record = pd.DataFrame({'ID': [self._id], 'Name': [self._name], self._today_date: [self._today_time]})
+                attendance_df = pd.concat([attendance_df, new_record], ignore_index=True)
+            
+            # Save updated attendance data
+            attendance_df.to_excel('attendance.xlsx', index=False)
+
+        except FileNotFoundError:
+            print("course file not found.")
+        except pd.errors.ParserError:
+            print("Error parsing course file.")
+
+student = AddAttendance(2)
 print("Name:", student.get_name())
