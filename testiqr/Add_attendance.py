@@ -11,7 +11,14 @@ class AddAttendance:
         self._load_student_data()
         self.add_to_excel()
 
-        
+        def add_student(self,id, name):
+            self._name = name
+            
+            students_df = pd.read_csv('students.csv')
+
+            new_student = pd.DataFrame({'id': [id], 'name': [name]})
+            students_df = pd.concat([students_df, new_student], ignore_index=True)
+            students_df.to_csv('students.csv', index=False)
 
     def _load_student_data(self):
         #need to add path to csv
