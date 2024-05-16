@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 class StartFrame(tk.Frame):
-    def __init__(self, parent, controller, is_visible=False):
+    def __init__(self, parent, controller, frame_id, is_visible=False):
         tk.Frame.__init__(self, parent)
         self.is_visible = is_visible
         label = ttk.Label(self)
