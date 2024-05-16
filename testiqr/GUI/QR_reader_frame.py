@@ -6,7 +6,7 @@ import json
 from qreader import QReader
 
 class QRReaderFrame(tk.Frame):
-    def __init__(self, parent, controller, is_visible=False):
+    def __init__(self, parent, controller, frame_id, is_visible=False):
         tk.Frame.__init__(self, parent)
         self.is_visible  = is_visible # check if the frame is visible (i.e. on top of other frames)
         self.controller = controller
@@ -15,11 +15,11 @@ class QRReaderFrame(tk.Frame):
 
         open_previous_frame = ttk.Button(self)
         open_previous_frame['text'] = "Previous Frame"
-        open_previous_frame['command'] = lambda : [self.set_is_visible(False), self.controller.show_frame(0)]
+        open_previous_frame['command'] = lambda : [self.set_is_visible(False), self.controller.show_frame(frame_id - 1)]
 
         open_next_frame = ttk.Button(self)
         open_next_frame['text'] = "Next Frame"
-        open_next_frame['command'] = lambda : [self.set_is_visible(False), self.controller.show_frame(2)]
+        open_next_frame['command'] = lambda : [self.set_is_visible(False), self.controller.show_frame(frame_id + 1)]
         
         # initiate Label component to contain camera frame
         self.image_label = ttk.Label(self)
@@ -55,7 +55,7 @@ class QRReaderFrame(tk.Frame):
         if not self.is_visible:
             # not showing the image read from camera
             # to improve performance
-            self.image_label.after(10, lambda : self.open_camera())
+            # self.image_label.after(10, lambda : self.open_camera())
             self.image_label.configure(image='')
         else:
             opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
@@ -73,8 +73,8 @@ class QRReaderFrame(tk.Frame):
                     self.set_is_visible(False)
                     self.controller.show_frame(2, props={'id':w})
                 except:
-                    print("not correct qrcode")
-            self.image_label.after(10, lambda : self.open_camera())
+                    print("incorrect qrcode")
+        self.image_label.after(10, lambda : self.open_camera())
 
     def get_id(self, qrcode):
         json_qr = json.loads(qrcode)

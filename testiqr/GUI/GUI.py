@@ -40,7 +40,7 @@ class AttendanceApp(tk.Tk):
             ]
         for i in range(len(frames)):
             F = frames[i]
-            frame = F(container, self)
+            frame = F(container, self, i)
             self.frames[i] = frame
             frame.grid(row = 0, column = 0, sticky ="nsew")
         
