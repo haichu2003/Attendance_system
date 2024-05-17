@@ -12,7 +12,7 @@ class AddAttendance:
 
         def add_student(self,id, name):
             self._name = name
-            
+            self._id = id
             students_df = pd.read_csv('students.csv')
 
             new_student = pd.DataFrame({'id': [id], 'name': [name]})
@@ -23,16 +23,17 @@ class AddAttendance:
     def get_name(self):
         return self._name
 
-    
+
 
     def add_to_excel(self):
-        try: 
-            # Need to add path to excel    
+        try:
             attendance_df = pd.read_excel(self._course_path)
+
+            #checks if there is a column for todays date
             if self._today_date not in attendance_df.columns:
                 attendance_df[self._today_date] = pd.NaT
 
-            
+
             # Check if the student ID already exists in the attendance data
             if self._id in attendance_df['ID'].values:
                 # Update the attendance time for the specified student
@@ -41,7 +42,7 @@ class AddAttendance:
                 # add a new record
                 new_record = pd.DataFrame({'ID': [self._id], 'Name': [self._name], self._today_date: [str(self._today_time)]})
                 attendance_df = pd.concat([attendance_df, new_record], ignore_index=True)
-            
+
             # Save updated attendance data
             attendance_df.to_excel('attendance.xlsx', index=False)
 
