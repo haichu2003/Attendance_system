@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import time
 
 class SuccessFrame(tk.Frame):
     def __init__(self, parent, controller, frame_id, is_visible=False):
@@ -12,7 +13,7 @@ class SuccessFrame(tk.Frame):
 
         return_button = ttk.Button(self)
         return_button['text'] = "Return"
-        return_button['command'] = lambda: [self.set_is_visible(False), self.controller.show_frame(0)]
+        return_button['command'] = lambda: [self.set_is_visible(False), self.controller.show_frame(1)]
         
         # label.grid(row=3, column=3)
         # return_button.grid(row=4, column=3)
@@ -23,6 +24,8 @@ class SuccessFrame(tk.Frame):
         # self.control_thread.start()
 
         # self.bind("<Escape>", lambda: self.control_thread.join())
+
+        # self.auto_go_back()
     
 
     def set_is_visible(self, is_visible):
@@ -30,6 +33,12 @@ class SuccessFrame(tk.Frame):
 
     def set_props(self, props):
         self.props = props
+
+    def auto_go_back(self):
+        if self.is_visible:
+            self.set_is_visible(False)
+            self.after(500, self.controller.show_frame(1))
+        self.auto_go_back()
 
     # def success(self):
     #     if self.is_visible:
