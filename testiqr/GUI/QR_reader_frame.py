@@ -26,8 +26,8 @@ class QRReaderFrame(tk.Frame):
 
         label.place(relx=0.5, rely=0.1, anchor=tk.N)
         self.image_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-        open_previous_frame.place(relx=0.3, rely=0.9, anchor=tk.N)
-        open_next_frame.place(relx=0.7, rely=0.9, anchor=tk.N)
+        # open_previous_frame.place(relx=0.3, rely=0.9, anchor=tk.N)
+        # open_next_frame.place(relx=0.7, rely=0.9, anchor=tk.N)
 
         self.reader = QReader(model_size='s')
 
@@ -71,7 +71,8 @@ class QRReaderFrame(tk.Frame):
                     w = self.get_id(data)
                     print(w)
                     self.set_is_visible(False)
-                    self.controller.show_frame(2, props={'id':w})
+                    self.props['id'] = w
+                    self.controller.show_frame(2, props=self.props)
                 except:
                     print("incorrect qrcode")
         self.image_label.after(10, lambda : self.open_camera())
