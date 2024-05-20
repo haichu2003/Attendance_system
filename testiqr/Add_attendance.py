@@ -87,6 +87,7 @@ class AddAttendance:
             with pd.ExcelWriter(self._course_path, mode='a', if_sheet_exists='overlay') as writer:
                 students_df.to_excel(writer, sheet_name="Students", index=False)
 
-student = AddAttendance('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/attendance.xlsx')
-student.add_student(3,'kalle')
-student.add_attendance(3)
+if __name__ == "__main__":
+    student = AddAttendance('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/attendance.xlsx')
+    student.add_student(3,'kalle')
+    student.add_attendance(3)
