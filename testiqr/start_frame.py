@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 
+from Add_attendance import AddAttendance
+
 class StartFrame(tk.Frame):
     def __init__(self, parent, controller, frame_id, is_visible=False):
         tk.Frame.__init__(self, parent)
@@ -12,7 +14,7 @@ class StartFrame(tk.Frame):
 
         label = ttk.Label(self)
         label['text'] = "Start Frame"
-        
+
         self.filename = None
         choose_file = ttk.Button(wrapper_frame)
         choose_file['text'] = "Choose a file"
@@ -47,7 +49,7 @@ class StartFrame(tk.Frame):
         wrapper_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         open_QR_reader_frame.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
 
-    
+
     def set_is_visible(self, is_visible):
         self.is_visible = is_visible
 

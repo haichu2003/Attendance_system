@@ -4,6 +4,7 @@ from tkinter import ttk
 class InputFrame(tk.Frame):
     def __init__(self, parent, controller, frame_id, is_visible=False):
         tk.Frame.__init__(self, parent)
+        self.controller = controller
         self.is_visible = is_visible
         self.props = None
 
@@ -24,7 +25,7 @@ class InputFrame(tk.Frame):
         self.name_sv = tk.StringVar()
         self.name_sv.trace_add('write', self.set_name)
         self.name_input_text = tk.Entry(wrapper_frame, textvariable=self.name_sv)
-        
+
         # get user email and store in self.email
         self.email = None
         self.email_input_lb = ttk.Label(wrapper_frame)
@@ -37,13 +38,15 @@ class InputFrame(tk.Frame):
         open_previous_frame = ttk.Button(wrapper_frame)
         open_previous_frame['text'] = "Previous Frame"
         open_previous_frame['command'] = lambda : [
-            self.set_is_visible(False), 
+            self.set_is_visible(False),
             controller.show_frame(frame_id - 1)
             ]
 
         submit_button = ttk.Button(wrapper_frame)
         submit_button['text'] = "Submit"
         submit_button['command'] = lambda : [
+            self.controller.attendance.add_student(22,'kalleto'),
+            self.controller.attendance.add_attendance(22),
             self.set_is_visible(False),
             self.clear_input(),
             controller.show_frame(frame_id + 1)
@@ -76,7 +79,7 @@ class InputFrame(tk.Frame):
 
     def set_props(self, props):
         self.props = props
-        if self.props['id']: 
+        if self.props['id']:
             print(self.props['id'])
             self.id = self.props['id']
             # get name and email by id here
