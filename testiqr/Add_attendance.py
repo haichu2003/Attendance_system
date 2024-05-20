@@ -20,12 +20,12 @@ class AddAttendance:
 
     #adds student to the csv file
     def add_student(self,id, name = None, email = None):
-        students_df = pd.read_csv('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/students.csv')
+        students_df = pd.read_csv('./students.csv')
         row = students_df[students_df['id'] == id]
         if row.empty:
             new_student = pd.DataFrame({'id': [id], 'name': [name], 'email': [email]})
             students_df = pd.concat([students_df, new_student], ignore_index=True)
-            students_df.to_csv('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/students.csv', index=False)
+            students_df.to_csv('./students.csv', index=False)
 
 
 
@@ -39,7 +39,7 @@ class AddAttendance:
 
         #get student name by id
         name = None
-        students_df = pd.read_csv('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/students.csv')
+        students_df = pd.read_csv('./students.csv')
         row = students_df[students_df['id'] == id]
         if not row.empty:
             name = row.iloc[0]['name']
@@ -87,6 +87,7 @@ class AddAttendance:
             with pd.ExcelWriter(self._course_path, mode='a', if_sheet_exists='overlay') as writer:
                 students_df.to_excel(writer, sheet_name="Students", index=False)
 
-#student = AddAttendance('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/attendance.xlsx')
-#student.add_student(3,'kalle')
-#student.add_attendance(3)
+if __name__ == "__main__":
+    student = AddAttendance('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/attendance.xlsx')
+    student.add_student(3,'kalle')
+    student.add_attendance(3)

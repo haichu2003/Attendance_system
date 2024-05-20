@@ -60,7 +60,7 @@ class QRReaderFrame(tk.Frame):
         else:
             # detect QR reader here
             outputs, others = self.reader.detect_and_decode(frame, return_detections=True)
-            print(others)
+            # print(others)
             if others:
                 x1, y1, x2, y2 = list(map(int, others[0]['bbox_xyxy']))
                 cv2.rectangle(frame, (x1, y1), (x2, y2), color=(0, 255, 0), thickness=2)
