@@ -36,6 +36,8 @@ class AddAttendance:
 
     #adds attendance to excel file
     def add_attendance(self, id):
+
+        #get student name by id
         name = None
         students_df = pd.read_csv('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/students.csv')
         row = students_df[students_df['id'] == id]
@@ -47,9 +49,10 @@ class AddAttendance:
 
 
         try:
-            self._today_date = datetime.now().strftime("%d.%m.%Y")
-            self._today_time = datetime.now().strftime("%H.%M")
+            self._today_date = datetime.now().strftime("%d/%m/%Y")
+            self._today_time = datetime.now().strftime("%H:%M")
             attendance_df = pd.read_excel(self._course_path, sheet_name="Attendance")
+
             # Check if there is a column for today's date
             if self._today_date not in attendance_df.columns:
                 attendance_df[self._today_date] = pd.NaT
@@ -75,6 +78,7 @@ class AddAttendance:
         except PermissionError:
             print(f"Permission error, make sure the excel file is closed when the application is on. excelfile: {self._course_path}")
 
+        #updates if student is not in students sheet
         students_df = pd.read_excel(self._course_path, sheet_name="Students")
         if id not in students_df['ID'].values:
             new_record = pd.DataFrame({'ID': [id], 'Name': [name], 'Email': [email]})
@@ -83,6 +87,6 @@ class AddAttendance:
             with pd.ExcelWriter(self._course_path, mode='a', if_sheet_exists='overlay') as writer:
                 students_df.to_excel(writer, sheet_name="Students", index=False)
 
-#student = AddAttendance('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/attendance.xlsx')
-#student.add_student(1,'kalle')
-#student.add_attendance(1)
+student = AddAttendance('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/attendance.xlsx')
+student.add_student(3,'kalle')
+student.add_attendance(3)
