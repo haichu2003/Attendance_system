@@ -5,7 +5,7 @@ from QR_reader_frame import QRReaderFrame
 from start_frame import StartFrame
 from input_frame import InputFrame
 from success_frame import SuccessFrame
-from Add_attendance import AddAttendance
+
 class AttendanceApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)

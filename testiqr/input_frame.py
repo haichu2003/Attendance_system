@@ -7,6 +7,7 @@ class InputFrame(tk.Frame):
         self.controller = controller
         self.is_visible = is_visible
         self.props = None
+        self.frame_id = frame_id
 
         wrapper_frame = tk.Frame(self)
 
@@ -45,11 +46,7 @@ class InputFrame(tk.Frame):
         submit_button = ttk.Button(wrapper_frame)
         submit_button['text'] = "Submit"
         submit_button['command'] = lambda : [
-            self.controller.attendance.add_student(22,'kalleto'),
-            self.controller.attendance.add_attendance(22),
-            self.set_is_visible(False),
-            self.clear_input(),
-            controller.show_frame(frame_id + 1)
+            self.submit_onclick()
             ]
 
         # grid for multiple items
@@ -84,8 +81,16 @@ class InputFrame(tk.Frame):
             self.id = self.props['id']
             # get name and email by id here
             self.id_value['text'] = self.id
+        if self.props['attendance']:
+            self.attendance = self.props['attendance']
 
     def clear_input(self):
         self.name_input_text.delete(0, tk.END)
         self.email_input_text.delete(0, tk.END)
 
+    def submit_onclick(self):
+        self.attendance.add_student(self.id, self.name, self.email)
+        self.attendance.add_attendance(self.id)
+        self.set_is_visible(False)
+        self.clear_input()
+        self.controller.show_frame(self.frame_id + 1)

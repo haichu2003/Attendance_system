@@ -15,6 +15,7 @@ class StartFrame(tk.Frame):
         label = ttk.Label(self)
         label['text'] = "Start Frame"
 
+        # Choose and show file name
         self.filename = None
         choose_file = ttk.Button(wrapper_frame)
         choose_file['text'] = "Choose a file"
@@ -22,6 +23,7 @@ class StartFrame(tk.Frame):
 
         self.filename_label = ttk.Label(wrapper_frame)
 
+        # Choose and show folder name
         self.foldername = None
         choose_folder = ttk.Button(wrapper_frame)
         choose_folder['text'] = "Open folder"
@@ -29,16 +31,19 @@ class StartFrame(tk.Frame):
 
         self.foldername_label = ttk.Label(wrapper_frame)
 
+        # Get course ID from teacher
         self.course_id = None
         self.course_id_sv = tk.StringVar()
         self.course_id_sv.trace_add("write", self.set_course_id)
         new_course_id = ttk.Label(wrapper_frame, text="Enter course ID:")
         self.course_id_input = ttk.Entry(wrapper_frame, textvariable=self.course_id_sv)
 
+        # Submit button
         open_QR_reader_frame = ttk.Button(self)
         open_QR_reader_frame['text'] = "Submit"
         open_QR_reader_frame['command'] = lambda : [self.submit_course()]
         
+        # organize all elements
         label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
         choose_file.grid(row=1, column=0, padx=10, pady=10)
         self.filename_label.grid(row=1, column=1, padx=10, pady=10)
@@ -86,9 +91,9 @@ class StartFrame(tk.Frame):
             print('you must enter a course id!')
             return
         elif self.foldername is not None and self.course_id is not None:
-            name = f'\"{self.foldername}/{self.course_id}_attendance.xlsx\"'
-        # check file here
-        #
-        #
+            name = f'{self.foldername}/{self.course_id}_attendance.xlsx'
+        # check file here           
+        self.attendance = AddAttendance(name)
+
         self.set_is_visible(False)
-        self.controller.show_frame(1, props={"file":self.foldername_label})
+        self.controller.show_frame(1, props={"attendance" : self.attendance})

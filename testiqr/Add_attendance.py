@@ -20,12 +20,12 @@ class AddAttendance:
 
     #adds student to the csv file
     def add_student(self,id, name = None, email = None):
-        students_df = pd.read_csv('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/students.csv')
+        students_df = pd.read_csv('./students.csv')
         row = students_df[students_df['id'] == id]
         if row.empty:
             new_student = pd.DataFrame({'id': [id], 'name': [name], 'email': [email]})
             students_df = pd.concat([students_df, new_student], ignore_index=True)
-            students_df.to_csv('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/students.csv', index=False)
+            students_df.to_csv('./students.csv', index=False)
 
 
 
@@ -37,7 +37,7 @@ class AddAttendance:
     #adds attendance to excel file
     def add_attendance(self, id):
         name = None
-        students_df = pd.read_csv('C:/Users/OMISTAJA/Documents/kesaharkka/Attendance_system/testiqr/students.csv')
+        students_df = pd.read_csv('./students.csv')
         row = students_df[students_df['id'] == id]
         if not row.empty:
             name = row.iloc[0]['name']
