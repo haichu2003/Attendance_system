@@ -5,13 +5,13 @@ from QR_reader_frame import QRReaderFrame
 from start_frame import StartFrame
 from input_frame import InputFrame
 from success_frame import SuccessFrame
-
+from Add_attendance import AddAttendance
 class AttendanceApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
         self.title("Attendance Tracker")
-        
+        attendance = None
         container = tk.Frame(self)
         container.pack(side='top', fill='both', expand=True)
         container.grid_rowconfigure(0, weight=1)
@@ -33,9 +33,9 @@ class AttendanceApp(tk.Tk):
 
         self.frames = {}
         frames = [
-            StartFrame, 
-            QRReaderFrame, 
-            InputFrame, 
+            StartFrame,
+            QRReaderFrame,
+            InputFrame,
             SuccessFrame
             ]
         for i in range(len(frames)):
@@ -43,14 +43,14 @@ class AttendanceApp(tk.Tk):
             frame = F(container, self, i)
             self.frames[i] = frame
             frame.grid(row = 0, column = 0, sticky ="nsew")
-        
+
         self.show_frame(0)
-    
-    
+
+
     def show_frame(self, cont, props=None):
         frame = self.frames[cont]
         frame.set_is_visible(True)
-        if props: 
+        if props:
             frame.set_props(props)
             print(props)
         frame.tkraise()

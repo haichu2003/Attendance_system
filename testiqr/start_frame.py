@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 
+from Add_attendance import AddAttendance
+
 class StartFrame(tk.Frame):
     def __init__(self, parent, controller, frame_id, is_visible=False):
         tk.Frame.__init__(self, parent)
@@ -10,7 +12,7 @@ class StartFrame(tk.Frame):
 
         label = ttk.Label(self)
         label['text'] = "Start Frame"
-        
+
         self.filename = None
         choose_file = ttk.Button(self)
         choose_file['text'] = "Choose a file"
@@ -30,7 +32,7 @@ class StartFrame(tk.Frame):
         open_QR_reader_frame = ttk.Button(self)
         open_QR_reader_frame['text'] = "Submit"
         open_QR_reader_frame['command'] = lambda : [self.submit_course()]
-        
+
         # label.grid(row=0, column=4, padx=10, pady=10)
         # open_QR_reader_frame.grid(row=4, column=4, padx=10, pady=10)
         label.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
@@ -40,7 +42,7 @@ class StartFrame(tk.Frame):
         self.course_id_input.place(relx=0.65, rely=0.65, anchor=tk.CENTER)
         open_QR_reader_frame.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
 
-    
+
     def set_is_visible(self, is_visible):
         self.is_visible = is_visible
 
@@ -65,7 +67,7 @@ class StartFrame(tk.Frame):
 
     def submit_course(self):
         name = None
-        if self.filename: name = self.filename
+        if self.filename: self.controller.attendance = AddAttendance(self.filename)
         else:
             name = f'\"{self.foldername}/{self.course_id}_attendance.csv\"'
         self.set_is_visible(False)
