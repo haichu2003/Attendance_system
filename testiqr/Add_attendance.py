@@ -30,8 +30,13 @@ class AddAttendance:
 
 
 
-    def get_name(self):
-        return self._name
+    def get_name_by_id(self, id):
+        name = None
+        students_df = pd.read_csv('./students.csv')
+        row = students_df[students_df['id'] == id]
+        if not row.empty:
+            name = row.iloc[0]['name']
+        return name
 
 
     #adds attendance to excel file
