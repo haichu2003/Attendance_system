@@ -83,6 +83,9 @@ class InputFrame(tk.Frame):
             self.id_value['text'] = self.id
         if self.props['attendance']:
             self.attendance = self.props['attendance']
+            self.name, self.email = self.attendance.get_name_by_id(self.id)
+            self.name_input_text.insert(0, self.name)
+            self.email_input_text.insert(0, self.email)
 
     def clear_input(self):
         self.name_input_text.delete(0, tk.END)
