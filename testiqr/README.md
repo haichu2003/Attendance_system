@@ -12,11 +12,11 @@ python GUI.py
 ```
 
 If there is problem with pyzbar (ImportError related with `lizbar-64.dll`)  
+
 ### On window
 install [vcredist_x64.exe](https://www.microsoft.com/en-gb/download/details.aspx?id=40784) from the _Visual C++ Redistributable Packages for Visual Studio 2013_  
 
 ### On linux
-run 
 ```
 sudo apt-get install libzbar0
 ```
