@@ -80,7 +80,7 @@ class QRReaderFrame(tk.Frame):
             self.image_label.photo_image = photo_image
             self.image_label.configure(image=photo_image)
 
-        self.image_label.after(10, lambda : self.open_camera())
+        self.image_label.after(25, lambda : self.open_camera())
 
     def get_id(self, qrcode):
         json_qr = json.loads(qrcode)
